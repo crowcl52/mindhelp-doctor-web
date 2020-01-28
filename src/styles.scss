@@ -1,1 +1,87 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./variables.scss";
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '~@angular/material/theming';
+
+html, body { height: 100%; }
+
+$mat-myapp-primary: (
+    50: #e4f6ee,
+    100: #bce9d5,
+    200: #90daba,
+    300: #64cb9e,
+    400: #42bf89,
+    500: #21b474,
+    600: #1dad6c,
+    700: #18a461,
+    800: #149c57,
+    900: #0b8c44,
+    A100: #bcffd6,
+    A200: #89ffb7,
+    A400: #56ff98,
+    A700: #3cff88,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$mat-myapp-accent: (
+    50: #e4f6ee,
+    100: #bce9d5,
+    200: #90daba,
+    300: #64cb9e,
+    400: #42bf89,
+    500: #21b474,
+    600: #1dad6c,
+    700: #18a461,
+    800: #149c57,
+    900: #0b8c44,
+    A100: #bcffd6,
+    A200: #89ffb7,
+    A400: #56ff98,
+    A700: #3cff88,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$primary: mat-palette($mat-myapp-primary);
+$accent: mat-palette($mat-myapp-accent);
+
+$theme: mat-light-theme($primary, $accent);
+
+@include angular-material-theme($theme);
+
+.txt-main{
+    color : $primary-color;
+}
+
+.bg-main{
+    background-color : $primary-color;
+}
