@@ -79,9 +79,34 @@ $theme: mat-light-theme($primary, $accent);
 @include angular-material-theme($theme);
 
 .txt-main{
-    color : $primary-color;
+    color : $primary-color!important;
 }
 
 .bg-main{
-    background-color : $primary-color;
+    background-color : $primary-color!important;
+}
+
+.full{
+    min-height: 100vh;
+}
+
+.full-scroll{
+    height: 100vh;
+    overflow: auto;
+}
+
+.full-width{
+    width: 100%;
+}
+
+.fixed{
+    position: fixed;
+}
+
+.mat-drawer-inner-container{
+    overflow: hidden!important;
+}
+
+.logo{
+    width: 150px;
 }
