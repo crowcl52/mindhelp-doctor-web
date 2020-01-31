@@ -10,7 +10,6 @@ export class AuthGuard implements CanActivate {
   constructor( private authService: AuthService ) { }
 
   canActivate(){
-    console.log("enter")
     return this.authService.isAuth();
   }
   

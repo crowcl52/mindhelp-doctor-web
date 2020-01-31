@@ -1,1 +1,50 @@
-<p>home works!</p>
+<div class="image-wrapper my-2 pt-2">
+    <mat-card [id]="'cat'+c.id" (click)="goCategorie(c.id,('cat'+c.id))" *ngFor="let c of categories" class="img-container ml-2">
+        <img width="100%" mat-card-image [src]="c.cat_image" [alt]="c.name">
+        <mat-card-content>
+          <p class="text-center">
+            {{c.name}}
+          </p>
+        </mat-card-content>
+      </mat-card>
+</div>
+<mat-divider></mat-divider>
+
+<section class="container-fluid">
+    <div class="row ">
+        <!-- Doctor Info -->
+        <div *ngFor="let d of doctors" class="row align-items-center col-xl-6 col-12 mt-3 mx-0">
+            <div class="col-auto">
+                <img [src]="d.profile_image_url" class="rounded-circle avatar" alt="avatar">
+            </div>
+            <div class="col-8">
+                <p class="m-0"> {{d.doctor.speciality_name}} </p>
+                <p> <b> {{d.name}} </b> </p>
+            </div>
+            <div class="col-auto center-flex">
+                <mat-icon>start</mat-icon>
+                <span class="text-secondary ml-2"> {{d.doctor.total_star}} </span>
+            </div>
+            <div class="col-12 row mt-3">
+                <div class="col">
+                    <p class="txt-secondary text-center"> {{d.consultation_fee}} FeedBacks </p>
+                </div>
+                <div class="col">
+                    <p class="txt-secondary text-center"> {{d.doctor.working_since}} años exp </p>
+                </div>
+                <div class="col">
+                    <p class="txt-secondary text-center"> {{d.age}} años </p>
+                </div>
+            </div>
+            <div class="col-12">
+            <p class="text-dark"> {{d.doctor.description}} </p>
+            </div>
+            <div class="col-auto">
+                <a class="txt-main cursor" [href]="d.doctor.resume" target="_blank" > Ver Resumen </a>
+            </div>
+
+            <button mat-button class="bg-main text-white col-12 mb-3"> Book Now </button>
+            <mat-divider class="col-12"></mat-divider>
+        </div>
+    </div>
+</section>

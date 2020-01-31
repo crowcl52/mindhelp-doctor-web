@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ComponentFactoryResolver } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { SetUserAction } from '../redux/user.actions';
 import { Router } from '@angular/router';
+import { SetCategorieAction } from '../redux/categories.actions';
+import { SetCategorieDoctorsAction } from '../redux/categories-doctors.actions';
 
 
 @Injectable({
@@ -12,8 +14,10 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  publicKey = "wd2yTcKPlW9qcXWiv8MhQ8rOGHjcrJuC";
-  secureIV = "sfsdfsdfsdf12345";
+  private publicKey = "wd2yTcKPlW9qcXWiv8MhQ8rOGHjcrJuC";
+  private secureIV = "sfsdfsdfsdf12345";
+  private privateKey = "";
+  token = "";
 
   private url = "https://test.mindhelp.mx/api/v1/";
 
@@ -24,10 +28,11 @@ export class AuthService {
   login(user) {
     let url = `${this.url}app_login`;
     this.http.post(url, user).subscribe((data:any) => {
-      console.log(data)
       let user = JSON.parse(this.decrypt(data.user));
       this.store.dispatch(new SetUserAction({... user}))
       this.user = user;
+      this.privateKey = user.enckey;
+      this.token = user.token;
       this.route.navigate(['panel']);
     }, err => {
       console.log(err.error.msg);
@@ -58,8 +63,16 @@ export class AuthService {
     }
   }
 
-  encrypt(data) {
-    let _key = CryptoJS.enc.Utf8.parse(this.publicKey);
+  /**
+   *
+   *
+   * @param {*} data la informacion que encriptaras
+   * @param {string} [type="public"] si la llave que usaras sera publica o privada
+   * @returns retorna la data encryptada
+   * @memberof AuthService
+   */
+  encrypt(data: any, type: string = "public") {
+    let _key = type == "public" ? CryptoJS.enc.Utf8.parse(this.publicKey) : CryptoJS.enc.Utf8.parse(this.privateKey) ;
     let _iv = CryptoJS.enc.Utf8.parse(this.secureIV);
 
     let encrypted = CryptoJS.AES.encrypt(
@@ -72,8 +85,16 @@ export class AuthService {
     return encrypted.toString();
   }
 
-  decrypt(data) {
-    let _key = CryptoJS.enc.Utf8.parse(this.publicKey);
+  /**
+   *
+   *
+   * @param {*} data la informacion que desencriptaras
+   * @param {string} [type="public"] si la llave que usaras sera publica o privada
+   * @returns retorna la data desencryptada
+   * @memberof AuthService
+   */
+  decrypt(data: any, type: string = "public") {
+    let _key = type == "public" ? CryptoJS.enc.Utf8.parse(this.publicKey) : CryptoJS.enc.Utf8.parse(this.privateKey) ;
     let _iv = CryptoJS.enc.Utf8.parse(this.secureIV);
 
     let decrypted = CryptoJS.AES.decrypt(
@@ -86,5 +107,26 @@ export class AuthService {
     return decrypted;
   }
 
+  getCategories(){
+    let url = `${this.url}categories`;
+    this.http.post(url,{}).subscribe((data:any) => {
+      let c = JSON.parse(this.decrypt(data.data));
+      this.store.dispatch(new SetCategorieAction([...c.categlories]))
+    }, err => {
+      console.log(err)
+      // this.presentAlert(err.error.msg);
+    })
+  }
+
+  getDoctors(data){
+    let url = `${this.url}doctors`;
+    this.http.post(url,data).subscribe((data:any) => {
+      let doctors = JSON.parse(this.decrypt(data.data, "public"));
+      this.store.dispatch(new SetCategorieDoctorsAction([...doctors.doctors]))
+    }, err => {
+      console.log(err)
+      // this.presentAlert(err.error.msg);
+    })
+  }
 
 }

@@ -101,12 +101,19 @@ $theme: mat-light-theme($primary, $accent);
 
 .fixed{
     position: fixed;
+    z-index: 999;
 }
 
 .mat-drawer-inner-container{
     overflow: hidden!important;
 }
 
-.logo{
-    width: 150px;
+.center-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cursor{
+    cursor: pointer;
 }

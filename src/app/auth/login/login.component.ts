@@ -14,14 +14,13 @@ export class LoginComponent implements OnInit {
 
   hide = true;
 
-  email = "aperezsandid@gmail.com";
+  email = "crowcl52@hotmail.com";
   password = "12345678";
 
   constructor( private authService:AuthService, private store: Store<AppState>, private router: Router ) { }
 
   ngOnInit() {
     this.store.select('user').subscribe( (data) => {
-      console.log(data)
       if(data){
         this.router.navigate(['panel']);
       }
@@ -30,11 +29,9 @@ export class LoginComponent implements OnInit {
 
   login() {
 
-    // [routerLink]="'/app'"
-
     let user = {"email": (this.email),"password": (this.password),"time_zone": "Asia/Kolkata","role_id": "3"};
     
-    let encryptUser = {data: this.authService.encrypt(user)};
+    let encryptUser = {data: this.authService.encrypt(user,"public")};
 
     this.authService.login(encryptUser);
   }

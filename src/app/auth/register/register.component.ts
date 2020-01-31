@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
 
 @Component({
   selector: 'app-register',
@@ -15,17 +17,7 @@ export class RegisterComponent implements OnInit {
   public registerFG: FormGroup;
 
 
-  constructor(private _formBuilder: FormBuilder, private authService: AuthService, private router: Router) { }
-
-
-  ngOnInit() {
-    this.store.select('user').subscribe( (data) => {
-      console.log(data)
-      if(data){
-        this.router.navigate(['panel']);
-      }
-    } )
-  }
+  constructor(private _formBuilder: FormBuilder, private authService: AuthService, private router: Router, private store: Store<AppState>) { }
 
   ngOnInit() {
     this.registerFG = this._formBuilder.group({
@@ -67,7 +59,7 @@ export class RegisterComponent implements OnInit {
 
     console.log(user)
 
-    let encryptUSer = { data: this.authService.encrypt(user) }
+    let encryptUSer = { data: this.authService.encrypt(user,"public") }
 
     // console.log(encryptUSer)
     this.authService.register(encryptUSer);
