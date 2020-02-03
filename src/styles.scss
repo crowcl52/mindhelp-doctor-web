@@ -117,3 +117,20 @@ $theme: mat-light-theme($primary, $accent);
 .cursor{
     cursor: pointer;
 }
+
+.back-btn{
+    width: 100px;
+}
+
+.info-block{
+    border-left: 6px solid $primary-color;
+    border-radius: 6px;
+}
+
+button:disabled {
+    cursor: not-allowed!important;
+}
+
+a{
+    color: gray!important;
+}

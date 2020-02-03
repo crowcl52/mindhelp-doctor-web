@@ -1,37 +1,43 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { Categorie } from '../models/categorie.model';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  catSuscription: Subscription = new Subscription();
+  docSuscription: Subscription = new Subscription();
 
   doctors = [];
   categories: Categorie[] = [];
+  cat_Id;
 
-  constructor( private store: Store<AppState>, private authService: AuthService ) {
-    store.select('categories').subscribe(c => {
+  constructor( private store: Store<AppState>, private authService: AuthService, private router: Router ) {
+    this.catSuscription = store.select('categories').subscribe(c => {
       this.categories = c.data;
     });
-    store.select('cdoctors').subscribe(cd =>{
-      console.log(cd.data)
+    this.docSuscription = store.select('cdoctors').subscribe(cd =>{
       this.doctors = cd.data
     })
    }
 
   ngOnInit() {
   }
+
   ngAfterViewInit(){
     this.goCategorie(5,"cat5");
   }
 
-
   goCategorie(id, name){
+    this.cat_Id = id;
     this.toogleCard(name);
     let data = {
       cat_id: id,
@@ -49,6 +55,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
           sections[i].classList.remove('active-categori');
         }
     document.querySelector(`#${id}`).classList.add('active-categori');
+  }
+
+  bookingNow(id){
+    this.router.navigate(['panel/booking-now',id,this.cat_Id]);
+  }
+
+  ngOnDestroy(){
+    this.catSuscription.unsubscribe();
+    this.docSuscription.unsubscribe();
   }
 
 }

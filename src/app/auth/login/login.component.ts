@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   hide = true;
 
   email = "crowcl52@hotmail.com";
-  password = "12345678";
+  password = "Lucario55";
 
   constructor( private authService:AuthService, private store: Store<AppState>, private router: Router ) { }
 

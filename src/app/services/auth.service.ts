@@ -1,6 +1,7 @@
 import { Injectable, ComponentFactoryResolver } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
+import Swal from 'sweetalert2';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { SetUserAction } from '../redux/user.actions';
@@ -19,7 +20,7 @@ export class AuthService {
   private privateKey = "";
   token = "";
 
-  private url = "https://test.mindhelp.mx/api/v1/";
+  private url = "https://mindhelp.mx/api/v1/";
 
   private user = null;
 
@@ -36,6 +37,11 @@ export class AuthService {
       this.route.navigate(['panel']);
     }, err => {
       console.log(err.error.msg);
+      Swal.fire({
+        icon: 'error',
+        title: 'Ha ocurrido un error',
+        text: err.error.msg,
+      });
       // this.presentAlert(err.error.msg);
     })
   }
@@ -49,6 +55,11 @@ export class AuthService {
       this.route.navigate(['panel']);
     }, err => {
       console.log(err.error.msg);
+      Swal.fire({
+        icon: 'error',
+        title: 'Ha ocurrido un error',
+        text: err.error.msg,
+      });
       // this.presentAlert(err.error.msg);
     })
   }
@@ -72,7 +83,7 @@ export class AuthService {
    * @memberof AuthService
    */
   encrypt(data: any, type: string = "public") {
-    let _key = type == "public" ? CryptoJS.enc.Utf8.parse(this.publicKey) : CryptoJS.enc.Utf8.parse(this.privateKey) ;
+    let _key = (type == "public") ? CryptoJS.enc.Utf8.parse(this.publicKey) : CryptoJS.enc.Utf8.parse(this.privateKey) ;
     let _iv = CryptoJS.enc.Utf8.parse(this.secureIV);
 
     let encrypted = CryptoJS.AES.encrypt(
@@ -94,7 +105,7 @@ export class AuthService {
    * @memberof AuthService
    */
   decrypt(data: any, type: string = "public") {
-    let _key = type == "public" ? CryptoJS.enc.Utf8.parse(this.publicKey) : CryptoJS.enc.Utf8.parse(this.privateKey) ;
+    let _key = (type == "public") ? CryptoJS.enc.Utf8.parse(this.publicKey) : CryptoJS.enc.Utf8.parse(this.privateKey) ;
     let _iv = CryptoJS.enc.Utf8.parse(this.secureIV);
 
     let decrypted = CryptoJS.AES.decrypt(
@@ -127,6 +138,53 @@ export class AuthService {
       console.log(err)
       // this.presentAlert(err.error.msg);
     })
+  }
+
+  getDoctorDetail(data){
+    let url = `${this.url}doctor_details`;
+    return this.http.post(url,data);
+  }
+
+  getDoctorAppointmentsList(data){
+    let url = `${this.url}doc_appointments_list`;
+    return this.http.post(url,data);
+  }
+
+  getDoctorTimeList(data){
+    let url = `${this.url}doc_time_slots_list`;
+    return this.http.post(url,data);
+  }
+
+  getDoctorFee(data){
+    let url = `${this.url}doc_fee`;
+    return this.http.post(url,data);
+  }
+
+  applyCupon(data){
+    let url = `${this.url}apply_coupon`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+
+    return this.http.post(url,data,{ headers });
+  }
+
+  saveBooking(data){
+    let url = `${this.url}save_appointment`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+
+    return this.http.post(url,data,{ headers });
+  }
+
+  getBookingList(data){
+    let url = `${this.url}all_appointment`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+
+    return this.http.post(url,data,{ headers });
   }
 
 }

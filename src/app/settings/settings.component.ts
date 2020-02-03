@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
+  title = "Editar Perfil";
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  changeTitle(title){
+    this.title = title;
   }
 
 }

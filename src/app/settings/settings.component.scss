@@ -1,0 +1,23 @@
+.avatar{
+    width: 150px;
+    height: 150px;
+}
+
+section{
+    height: 93vh;
+}
+
+.s-box{
+    height: 100%;
+    justify-content: space-around;
+}
+
+.info-container{
+    align-items: center;
+    flex-flow: column;
+    overflow: hidden;
+}
+
+.active-link{
+    border: 1px solid gray;
+}

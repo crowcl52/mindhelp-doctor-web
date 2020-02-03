@@ -27,7 +27,7 @@
             </div>
             <div class="col-12 row mt-3">
                 <div class="col">
-                    <p class="txt-secondary text-center"> {{d.consultation_fee}} FeedBacks </p>
+                    <p class="txt-secondary text-center"> {{d.total_reviews}} FeedBacks </p>
                 </div>
                 <div class="col">
                     <p class="txt-secondary text-center"> {{d.doctor.working_since}} años exp </p>
@@ -43,7 +43,7 @@
                 <a class="txt-main cursor" [href]="d.doctor.resume" target="_blank" > Ver Resumen </a>
             </div>
 
-            <button mat-button class="bg-main text-white col-12 mb-3"> Book Now </button>
+            <button mat-button class="bg-main text-white col-12 mb-3" (click)="bookingNow(d.doctor.user_id)" > Book Now </button>
             <mat-divider class="col-12"></mat-divider>
         </div>
     </div>

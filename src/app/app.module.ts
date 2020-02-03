@@ -23,6 +23,11 @@ import { BookinComponent } from './bookin/bookin.component';
 import { ChatComponent } from './chat/chat.component';
 import { SettingsComponent } from './settings/settings.component';
 import { PanelComponent } from './panel/panel.component';
+import { NewBookingComponent } from './new-booking/new-booking.component';
+import { EditProfileComponent } from './settings/edit-profile/edit-profile.component';
+import { ChangePasswordComponent } from './settings/change-password/change-password.component';
+import { ContactComponent } from './settings/contact/contact.component';
+import { FaqComponent } from './settings/faq/faq.component';
 
 
 @NgModule({
@@ -36,7 +41,12 @@ import { PanelComponent } from './panel/panel.component';
     BookinComponent,
     ChatComponent,
     SettingsComponent,
-    PanelComponent
+    PanelComponent,
+    NewBookingComponent,
+    EditProfileComponent,
+    ChangePasswordComponent,
+    ContactComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,
