@@ -63,7 +63,7 @@ export class NewBookingComponent implements OnInit {
     let data = {
       doc_id,
       cat_id,
-      time_zone: "Asia/Kolkata"
+      time_zone: 'America/Regina'
     }
 
     let encData = { data: this.service.encrypt(data) };
@@ -86,7 +86,7 @@ export class NewBookingComponent implements OnInit {
     let data = {
       doc_id: this.doctorId,
       date: this.doctorDate,
-      time_zone: "Asia/Kolkata"
+      time_zone: 'America/Regina'
     }
 
     let encData = { data: this.service.encrypt(data) };
@@ -110,7 +110,7 @@ export class NewBookingComponent implements OnInit {
       doc_id: this.doctorId,
       date: date,
       cat_id: this.doctorCatId,
-      time_zone: "Asia/Kolkata"
+      time_zone: 'America/Regina'
     }
 
     let encData = { data: this.service.encrypt(data) };
@@ -169,7 +169,7 @@ export class NewBookingComponent implements OnInit {
       date,
       orderId: 1,
       promo_code: this.promo,
-      time_zone: "Asia/Kolkata"
+      time_zone: 'America/Regina'
     }
 
     let encData = { data: this.service.encrypt(data, "private") };

@@ -28,6 +28,9 @@ import { EditProfileComponent } from './settings/edit-profile/edit-profile.compo
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
 import { ContactComponent } from './settings/contact/contact.component';
 import { FaqComponent } from './settings/faq/faq.component';
+import { VideoChatComponent } from './bookin/video-chat/video-chat.component';
+import { PublisherComponent } from './bookin/video-chat/publisher/publisher.component';
+import { SubscriberComponent } from './bookin/video-chat/subscriber/subscriber.component';
 
 
 @NgModule({
@@ -46,7 +49,10 @@ import { FaqComponent } from './settings/faq/faq.component';
     EditProfileComponent,
     ChangePasswordComponent,
     ContactComponent,
-    FaqComponent
+    FaqComponent,
+    VideoChatComponent,
+    PublisherComponent,
+    SubscriberComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +67,6 @@ import { FaqComponent } from './settings/faq/faq.component';
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
-
   ],
   providers: [],
   bootstrap: [AppComponent]

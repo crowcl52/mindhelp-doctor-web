@@ -13,6 +13,7 @@ import { EditProfileComponent } from './settings/edit-profile/edit-profile.compo
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
 import { ContactComponent } from './settings/contact/contact.component';
 import { FaqComponent } from './settings/faq/faq.component';
+import { VideoChatComponent } from './bookin/video-chat/video-chat.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'booking-now/:id/:cat_id', component: NewBookingComponent },
       { path: 'booking', component: BookinComponent },
+      { path: 'video', component: VideoChatComponent },
       { path: 'chat', component: ChatComponent },
       { path: 'settings', component: SettingsComponent,
         children: [

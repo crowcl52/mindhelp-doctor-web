@@ -1,17 +1,18 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { Categorie } from '../models/categorie.model';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ChangeTitleNav } from '../redux/ui.actions';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
 
   catSuscription: Subscription = new Subscription();
   docSuscription: Subscription = new Subscription();
@@ -19,21 +20,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   doctors = [];
   categories: Categorie[] = [];
   cat_Id;
-
+  firstModal = true;
   constructor( private store: Store<AppState>, private authService: AuthService, private router: Router ) {
     this.catSuscription = store.select('categories').subscribe(c => {
       this.categories = c.data;
     });
     this.docSuscription = store.select('cdoctors').subscribe(cd =>{
-      this.doctors = cd.data
+      this.doctors = cd.data;
     })
    }
 
   ngOnInit() {
-  }
-
-  ngAfterViewInit(){
-    this.goCategorie(5,"cat5");
   }
 
   goCategorie(id, name){
@@ -41,12 +38,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toogleCard(name);
     let data = {
       cat_id: id,
-      time_zone: "Asia/Kolkata"
+      time_zone: 'America/Regina'
     }
 
     let encryptData = {data : this.authService.encrypt(data, "public")};
     this.authService.getDoctors(encryptData);
-
   }
 
   toogleCard(id){
@@ -64,6 +60,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(){
     this.catSuscription.unsubscribe();
     this.docSuscription.unsubscribe();
+    this.store.dispatch( new ChangeTitleNav( "" ) );
+
   }
 
 }

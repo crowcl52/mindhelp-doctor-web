@@ -1,12 +1,13 @@
 <div class="image-wrapper my-2 pt-2">
-    <mat-card [id]="'cat'+c.id" (click)="goCategorie(c.id,('cat'+c.id))" *ngFor="let c of categories" class="img-container ml-2">
+    <mat-card [id]="'cat'+c.id" (click)="goCategorie(c.id,('cat'+c.id))" *ngFor="let c of categories"
+        class="img-container ml-2">
         <img width="100%" mat-card-image [src]="c.cat_image" [alt]="c.name">
         <mat-card-content>
-          <p class="text-center">
-            {{c.name}}
-          </p>
+            <p class="text-center">
+                {{c.name}}
+            </p>
         </mat-card-content>
-      </mat-card>
+    </mat-card>
 </div>
 <mat-divider></mat-divider>
 
@@ -37,14 +38,23 @@
                 </div>
             </div>
             <div class="col-12">
-            <p class="text-dark"> {{d.doctor.description}} </p>
+                <p class="text-dark"> {{d.doctor.description}} </p>
             </div>
             <div class="col-auto">
-                <a class="txt-main cursor" [href]="d.doctor.resume" target="_blank" > Ver Resumen </a>
+                <a class="txt-main cursor" [href]="d.doctor.resume" target="_blank"> Ver Resumen </a>
             </div>
 
-            <button mat-button class="bg-main text-white col-12 mb-3" (click)="bookingNow(d.doctor.user_id)" > Book Now </button>
+            <button mat-button class="bg-main text-white col-12 mb-3" (click)="bookingNow(d.doctor.user_id)"> Book Now
+            </button>
             <mat-divider class="col-12"></mat-divider>
         </div>
+    </div>
+</section>
+
+<section class="first-modal" *ngIf="firstModal">
+    <h1 class="title" > ¿Cual es tu estado el dia de hoy? </h1>
+    <div class="img-view" [id]="'cat'+c.id" (click)="goCategorie(c.id,('cat'+c.id)); firstModal= false" *ngFor="let c of categories">
+        <img width="100%" class="img-view-img" [src]="c.cat_image" [alt]="c.name">
+        <span class="text-white">{{c.name}}  </span>
     </div>
 </section>

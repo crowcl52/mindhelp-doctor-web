@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
-
+import { Router } from '@angular/router';
+import config from '../services/config';
 
 @Component({
   selector: 'app-bookin',
@@ -16,7 +17,7 @@ export class BookinComponent implements OnInit {
   bookingsPast = [];
   today = new Date();
 
-  constructor(private service: AuthService) { }
+  constructor(private service: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.getBookings("today");
@@ -27,7 +28,7 @@ export class BookinComponent implements OnInit {
   getBookings(type) {
     let data = {
       type,
-      time_zone: "Asia/Kolkata"
+      time_zone: 'America/Regina'
     }
     this.service.getBookingList(data).subscribe((d: any) => {
       console.log(d.appointments)
@@ -46,7 +47,7 @@ export class BookinComponent implements OnInit {
   getBookingsUpcoming(type) {
     let data = {
       type,
-      time_zone: "Asia/Kolkata"
+      time_zone: 'America/Regina'
     }
     this.service.getBookingList(data).subscribe((d: any) => {
       console.log(d.appointments)
@@ -65,7 +66,7 @@ export class BookinComponent implements OnInit {
   getBookingsPast(type) {
     let data = {
       type,
-      time_zone: "Asia/Kolkata"
+      time_zone: 'America/Regina'
     }
     this.service.getBookingList(data).subscribe((d: any) => {
       console.log(d.appointments)
@@ -83,6 +84,21 @@ export class BookinComponent implements OnInit {
 
   cheackDates(date: string = "") {
     return !(this.today >= new Date(date));
+  }
+
+  goSession() {
+
+    this.service.getOTToken(3).subscribe((d: any) => {
+      let data = JSON.parse(this.service.decrypt(d.data));
+      console.log(data)
+      // config.SESSION_ID = data.session_id;
+      // config.TOKEN = data.user_token;
+      console.log(config)
+      this.router.navigate(['/panel/video']);
+    }, err => {
+      console.log(err)
+    })
+
   }
 
 }

@@ -74,11 +74,11 @@
                             </div>
                             <div class="container-fluid mt-3">
                                 <div class="row justify-content-between">
-                                    <button [disabled]="cheackDates(b.start_date)" type="button"
+                                    <button (click)="goSession(b.user.id)" type="button"
                                         class="btn bg-main text-white col-5">
                                         <mat-icon>videocam_outline</mat-icon> Video
                                     </button>
-                                    <button [disabled]="cheackDates(b.start_date)" type="button"
+                                    <button [disabled]="cheackDates(b.start_date)" (click)="goSession(b.user.id)" type="button"
                                         class="btn bg-main text-white col-5">
                                         <mat-icon>chat_bubble_outline</mat-icon> Chat
                                     </button>
@@ -225,3 +225,5 @@
         </mat-tab>
     </mat-tab-group>
 </section>
+
+<button mat-button (click)="goSession()" > Force Video </button>

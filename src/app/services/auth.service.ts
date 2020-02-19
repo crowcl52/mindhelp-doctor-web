@@ -8,6 +8,7 @@ import { SetUserAction } from '../redux/user.actions';
 import { Router } from '@angular/router';
 import { SetCategorieAction } from '../redux/categories.actions';
 import { SetCategorieDoctorsAction } from '../redux/categories-doctors.actions';
+import { ChangeTitleNav } from '../redux/ui.actions';
 
 
 @Injectable({
@@ -134,6 +135,8 @@ export class AuthService {
     this.http.post(url,data).subscribe((data:any) => {
       let doctors = JSON.parse(this.decrypt(data.data, "public"));
       this.store.dispatch(new SetCategorieDoctorsAction([...doctors.doctors]))
+      let textTitle = `Hay ${doctors.doctors.length} doctores disponible en esta categoria`;
+      this.store.dispatch( new ChangeTitleNav( textTitle ) );
     }, err => {
       console.log(err)
       // this.presentAlert(err.error.msg);
@@ -180,6 +183,42 @@ export class AuthService {
 
   getBookingList(data){
     let url = `${this.url}all_appointment`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+
+    return this.http.post(url,data,{ headers });
+  }
+
+  getBookinDetail(data){
+    let url = `${this.url}appointment_detail`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+
+    return this.http.post(url,data,{ headers });
+  }
+
+  getOTToken(id){
+    let url = `${this.url}create_token/${id}`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+
+    return this.http.get(url,{ headers });
+  }
+
+  editProfile(data){
+    let url = `${this.url}edit_profile`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+
+    return this.http.post(url,data,{ headers });
+  }
+
+  getChats(data){
+    let url = `${this.url}chats`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     });

@@ -31,13 +31,12 @@ export class RegisterComponent implements OnInit {
       country: ['MX', Validators.required],
       date_of_birth: [new Date(), Validators.required],
       gender: ['Male', Validators.required],
-      time_zone: ['Asia/Kolkata', Validators.required],
+      time_zone: ['America/Regina', Validators.required],
     });
   }
 
   register() {
 
-    // let userData = new FormData();
     let date = this.registerFG.value.date_of_birth;
     let day = date.getDate();
     let month = date.getMonth() + 1;
@@ -57,11 +56,8 @@ export class RegisterComponent implements OnInit {
       "time_zone": (this.registerFG.value.time_zone)
     }
 
-    console.log(user)
-
     let encryptUSer = { data: this.authService.encrypt(user,"public") }
 
-    // console.log(encryptUSer)
     this.authService.register(encryptUSer);
 
   }

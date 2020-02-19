@@ -1,0 +1,8 @@
+<section class="video-container" >
+  <div *ngIf="session">
+    <app-publisher [session]="session"></app-publisher>
+    <app-subscriber class="doctor-camera" *ngFor="let stream of streams" [stream]="stream" [session]="session"></app-subscriber>
+    <h1 *ngIf="streams.length == 0" class="text-white"> Esperando al doctor ... </h1>
+  </div>
+</section>
+
