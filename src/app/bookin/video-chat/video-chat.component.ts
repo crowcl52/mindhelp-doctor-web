@@ -19,7 +19,6 @@ export class VideoChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
-    console.log(this.streams.length)
     this.opentokService.initSession().then((session: OT.Session) => {
       this.session = session;
       this.session.on('streamCreated', (event) => {
@@ -45,4 +44,11 @@ export class VideoChatComponent implements OnInit, OnDestroy {
     this.opentokService.disconnect();
   }
 
+  videoSettings(type){
+    if(type == 'video'){
+   
+    }else{
+      
+    }
+  }
 }

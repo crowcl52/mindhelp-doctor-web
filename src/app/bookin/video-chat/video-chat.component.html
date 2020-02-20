@@ -6,3 +6,8 @@
   </div>
 </section>
 
+<section class="buttons-container">
+  <button class="call-button" (click)="videoSettings('video')" > <mat-icon class="text-white" >videocam</mat-icon> </button>
+  <button class="call-button" (click)="videoSettings('mic')" > <mat-icon class="text-white" >mic</mat-icon> </button>
+  <button class="call-button bg-danger"[routerLink]="['/panel/booking']"  > <mat-icon class="text-white" >phone_disabled</mat-icon> </button>
+</section> 

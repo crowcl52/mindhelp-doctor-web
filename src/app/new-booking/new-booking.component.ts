@@ -168,9 +168,11 @@ export class NewBookingComponent implements OnInit {
       doc_id: this.doctorId,
       date,
       orderId: 1,
-      promo_code: this.promo,
+      promo_code: this.cupon,
       time_zone: 'America/Regina'
     }
+
+    console.log(data)
 
     let encData = { data: this.service.encrypt(data, "private") };
 

@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ChangeTitleNav } from '../redux/ui.actions';
+import { UnsetCategorieDoctorsAction } from '../redux/categories-doctors.actions';
 
 @Component({
   selector: 'app-home',
@@ -58,9 +59,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
+    this.doctors = [];
     this.catSuscription.unsubscribe();
     this.docSuscription.unsubscribe();
     this.store.dispatch( new ChangeTitleNav( "" ) );
+    this.store.dispatch( new UnsetCategorieDoctorsAction())
 
   }
 

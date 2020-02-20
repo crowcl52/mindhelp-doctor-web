@@ -1,1 +1,11 @@
-<p>chat works!</p>
+<section class="container-fluid pt-3">
+
+  <div *ngIf="chatList.length > 0; else loggedOut">
+    Welcome back, friend.
+  </div>
+
+  <ng-template #loggedOut>
+    <h3 class="text-center text-secondary"> Por el momento no hay chats disponibles </h3>
+  </ng-template>
+
+</section>

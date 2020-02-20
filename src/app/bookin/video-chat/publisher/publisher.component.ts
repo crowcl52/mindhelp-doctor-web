@@ -1,5 +1,8 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import { OpentokService } from 'src/app/services/opentok.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { Subscription } from 'rxjs';
 
 const publish = () => {
 
@@ -11,19 +14,21 @@ const publish = () => {
   styleUrls: ['./publisher.component.scss']
 })
 export class PublisherComponent implements AfterViewInit, OnDestroy {
-  
-  @ViewChild('publisherDiv',{static:false}) publisherDiv: ElementRef;
+
+  @ViewChild('publisherDiv', { static: false }) publisherDiv: ElementRef;
   @Input() session: OT.Session;
   publisher: OT.Publisher;
   publishing: Boolean;
 
-  constructor(private opentokService: OpentokService) {
+  uiSubscription: Subscription = new Subscription();
+
+  constructor(private opentokService: OpentokService, private store: Store<AppState>) {
     this.publishing = false;
   }
 
   ngAfterViewInit() {
     const OT = this.opentokService.getOT();
-    this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, {insertMode: 'append'});
+    this.publisher = OT.initPublisher(this.publisherDiv.nativeElement, { insertMode: 'append' });
 
     if (this.session) {
       if (this.session['isConnected']()) {
@@ -31,6 +36,13 @@ export class PublisherComponent implements AfterViewInit, OnDestroy {
       }
       this.session.on('sessionConnected', () => this.publish());
     }
+    // REdux conection
+    this.uiSubscription = this.store.select('ui').subscribe(data => {
+      // Pausar video
+      this.publisher.publishVideo(data.video.video);
+      // Pausar audio
+      this.publisher.publishAudio(data.video.audio);
+    })
   }
 
   publish() {
@@ -43,11 +55,8 @@ export class PublisherComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(){
-    // Pausar video
-    this.publisher.publishVideo(false);
-    // Pausar audio
-    this.publisher.publishAudio(false);
+  ngOnDestroy() {
+    this.uiSubscription.unsubscribe();
     this.session.unpublish(this.publisher);
   }
 

@@ -13,3 +13,11 @@
     height: 90vh;
     top: 0;
 }
+
+.buttons-container{
+    position: absolute;
+    width: 100%;
+    bottom: 100px;
+    background: white;
+    z-index: 999;
+}

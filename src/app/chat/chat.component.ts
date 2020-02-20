@@ -8,6 +8,8 @@ import { AuthService } from '../services/auth.service';
 })
 export class ChatComponent implements OnInit {
 
+  chatList = [];
+
   constructor( private service: AuthService ) { }
 
   ngOnInit() {
@@ -22,7 +24,8 @@ export class ChatComponent implements OnInit {
     let encData = {data:this.service.encrypt(data,"private")};
     this.service.getChats(encData).subscribe((d:any)=>{
       let data = JSON.parse(this.service.decrypt(d.data,"private"));
-      console.log(data)
+      this.chatList = data.chat_list;
+      console.log(this.chatList)
     },err =>{
       console.log(err)
     })
