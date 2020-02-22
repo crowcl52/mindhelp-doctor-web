@@ -1,0 +1,97 @@
+<section class="banner">
+    <nav class="navbar navbar-expand-lg navbar-light py-4">
+        <a class="navbar-brand"><img src="./assets/img/logo-landing.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white cursor" [ngx-scroll-to]="padecimiento" > Padecimientos </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white cursor" [ngx-scroll-to]="descarga" > Descargar App </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white cursor" [routerLink]="['/login']"> Iniciar Sesión/Regístro </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="info-banner">
+        <h1 class="text-white raleway title-landing"> <b> ¿Mal día? </b> <br> <span class="semi-bolt"> Estamos
+                <span class="green-btm">contigo</span> </span>
+        </h1>
+        <p class="text-white info-txt my-5 raleway">
+            Con Mind Help puedes elegir tu sesión con los <br>
+            mejores psicólogos, a la hora que decidas, desde <br>
+            el lugar que más te guste, en total privacidad.
+        </p>
+
+        <a class="btn-landing btn-bigger raleway" [routerLink]="['/login']"> Iniciar Ahora </a>
+    </div>
+
+</section>
+<section class="banner2">
+
+    <div class="banner2-info">
+        <h3> Usado por miles de personas </h3>
+        <p>
+            Opinaron que Mind Help es más efectivo y <br>
+            práctico que una terapia tradicional
+        </p>
+    </div>
+    <div class="banner2-img">
+        <img src="./assets/img/people.png" alt="people">
+    </div>
+</section>
+
+<section class="container my-5 py-5" #padecimiento>
+    <h1> <b> ¿Qué retos enfrentas hoy? </b> </h1>
+    <div class="row my-5">
+        <div *ngFor="let c of categorias" class="col-xl-3 col-6">
+            <div class="mini-card shadow my-3">
+                <div class="img-mini">
+                    <img width="100%" [src]="c.cat_image" alt="c.name">
+                </div>
+                <div class="mini-text">
+                    <p class="text-secodnary m-0"> {{c.name}} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container mt-5" #descarga>
+    <div class="row">
+        <div class="col-xl-6">
+            <h2 class="raleway title-landing"> Descarga la App </h2>
+            <p class="text-secondary info-txt raleway">
+                Agenda citas con los mejores psicólogos, <br>
+                ten video-sesiones y cambia tu vida.
+            </p>
+            <p class="text-dark info-txt raleway">
+                <b>
+                    Creemos en el potencial del ser <br>
+                    humano y la felicidad de vivir.
+                </b>
+            </p>
+            <img src="./assets/img/Playstore.png" alt="Playstore.png">
+            <img src="./assets/img/Appstore.png" alt="Appstore.png">
+        </div>
+        <div class="col-xl-6 row phone-container">
+            <div class="phone1 col-6">
+                <img src="./assets/img/phone1.png" alt="phone1">
+
+            </div>
+            <div class="phone2 col-6">
+                <img src="./assets/img/phone2.png" alt="phone2">
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer></footer>

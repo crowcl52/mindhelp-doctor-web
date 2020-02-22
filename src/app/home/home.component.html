@@ -14,47 +14,36 @@
 <section class="container-fluid">
     <div class="row ">
         <!-- Doctor Info -->
-        <div *ngFor="let d of doctors" class="row align-items-center col-xl-6 col-12 mt-3 mx-0">
-            <div class="col-auto">
-                <img [src]="d.profile_image_url" class="rounded-circle avatar" alt="avatar">
-            </div>
-            <div class="col-8">
-                <p class="m-0"> {{d.doctor.speciality_name}} </p>
-                <p> <b> {{d.name}} </b> </p>
-            </div>
-            <div class="col-auto center-flex">
-                <mat-icon>start</mat-icon>
-                <span class="text-secondary ml-2"> {{d.doctor.total_star}} </span>
-            </div>
-            <div class="col-12 row mt-3">
-                <div class="col">
-                    <p class="txt-secondary text-center"> {{d.total_reviews}} FeedBacks </p>
+        <div *ngFor="let d of doctors" class=" col-xl-3 col-12 mt-3  p-2">
+            <div class="row mx-0 border card-doctor">
+                <div class="col-4">
+                    <img [src]="d.profile_image_url" class="avatar" alt="avatar">
                 </div>
-                <div class="col">
-                    <p class="txt-secondary text-center"> {{d.doctor.working_since}} años exp </p>
+                <div class="col-8">
+                    <p class="m-0 text-secondary"> {{d.doctor.speciality_name}} </p>
+                    <p class="m-0"> <b> {{d.name}} </b> </p>
+                    <div class="star-container">
+                        <mat-icon>start</mat-icon>
+                        <span class="text-secondary ml-2"> {{d.doctor.total_star}} </span>
+                    </div>
                 </div>
-                <div class="col">
-                    <p class="txt-secondary text-center"> {{d.age}} años </p>
+                <div class="col-12 row mt-3">
+                    <div class="col">
+                        <p class="txt-main text-center"> {{d.total_reviews || '0'}} Reviews </p>
+                    </div>
+                    <div class="col">
+                        <p class="txt-secondary text-center"> {{d.doctor.working_since}} años exp </p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12">
-                <p class="text-dark"> {{d.doctor.description}} </p>
-            </div>
-            <div class="col-auto">
-                <a class="txt-main cursor" [href]="d.doctor.resume" target="_blank"> Ver Resumen </a>
+                <div class="col-12">
+                    <p class="text-dark text-truncate"> {{d.doctor.description}}
+                    </p> <a class="txt-main cursor" [href]="d.doctor.resume" target="_blank"> Ver Curriculum </a>
+                </div>
+                <button mat-button class="bg-main text-white mb-3 book-btn"
+                    (click)="bookingNow(d.doctor.user_id)"> Book Now
+                </button>
             </div>
 
-            <button mat-button class="bg-main text-white col-12 mb-3" (click)="bookingNow(d.doctor.user_id)"> Book Now
-            </button>
-            <mat-divider class="col-12"></mat-divider>
         </div>
-    </div>
-</section>
-
-<section class="first-modal" *ngIf="firstModal">
-    <h2 class="title text-secondary" > ¿Cual es tu estado el dia de hoy? </h2>
-    <div class="img-view" [id]="'cat'+c.id" (click)="goCategorie(c.id,('cat'+c.id)); firstModal= false" *ngFor="let c of categories">
-        <img width="100%" class="img-view-img" [src]="c.cat_image" [alt]="c.name">
-        <span class="text-white">{{c.name}}  </span>
     </div>
 </section>

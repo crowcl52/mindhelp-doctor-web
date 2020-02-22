@@ -7,7 +7,13 @@
 </section>
 
 <section class="buttons-container">
-  <button class="call-button" (click)="videoSettings('video')" > <mat-icon class="text-white" >videocam</mat-icon> </button>
-  <button class="call-button" (click)="videoSettings('mic')" > <mat-icon class="text-white" >mic</mat-icon> </button>
-  <button class="call-button bg-danger"[routerLink]="['/panel/booking']"  > <mat-icon class="text-white" >phone_disabled</mat-icon> </button>
+  <button class="call-button ml-3" (click)="videoSettings('video')" > 
+    <mat-icon class="text-white" *ngIf="!this.video.video">videocam</mat-icon> 
+    <mat-icon class="text-white" *ngIf="this.video.video" >videocam_off</mat-icon> 
+  </button>
+  <button class="call-button ml-3" (click)="videoSettings('mic')" > 
+    <mat-icon class="text-white" *ngIf="!this.video.audio" >mic</mat-icon> 
+    <mat-icon class="text-white" *ngIf="this.video.audio" >mic_off</mat-icon> 
+  </button>
+  <button class="call-button ml-3 bg-danger"[routerLink]="['/panel/booking']"  > <mat-icon class="text-white" >phone_disabled</mat-icon> </button>
 </section> 

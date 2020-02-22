@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { Categorie } from '../models/categorie.model';
@@ -13,7 +13,7 @@ import { UnsetCategorieDoctorsAction } from '../redux/categories-doctors.actions
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   catSuscription: Subscription = new Subscription();
   docSuscription: Subscription = new Subscription();
@@ -32,6 +32,10 @@ export class HomeComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit(){
+    this.goCategorie(5,'cat5')
   }
 
   goCategorie(id, name){

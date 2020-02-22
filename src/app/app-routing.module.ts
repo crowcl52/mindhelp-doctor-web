@@ -14,10 +14,11 @@ import { ChangePasswordComponent } from './settings/change-password/change-passw
 import { ContactComponent } from './settings/contact/contact.component';
 import { FaqComponent } from './settings/faq/faq.component';
 import { VideoChatComponent } from './bookin/video-chat/video-chat.component';
-
+import { LandingComponent } from './landing/landing.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'landing', component: LandingComponent },
   { path: 'register', component: RegisterComponent },
   {
     path: 'panel', component: PanelComponent,
@@ -40,7 +41,7 @@ const routes: Routes = [
       { path: '**', redirectTo: 'home' }
     ]
   },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: 'landing' }
 ];
 
 @NgModule({

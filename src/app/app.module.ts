@@ -9,6 +9,8 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
 import { StoreModule } from '@ngrx/store';
 import { appReducer } from './app.reducer';
 
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+
 // Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +33,7 @@ import { FaqComponent } from './settings/faq/faq.component';
 import { VideoChatComponent } from './bookin/video-chat/video-chat.component';
 import { PublisherComponent } from './bookin/video-chat/publisher/publisher.component';
 import { SubscriberComponent } from './bookin/video-chat/subscriber/subscriber.component';
+import { LandingComponent } from './landing/landing.component';
 
 
 @NgModule({
@@ -52,7 +55,8 @@ import { SubscriberComponent } from './bookin/video-chat/subscriber/subscriber.c
     FaqComponent,
     VideoChatComponent,
     PublisherComponent,
-    SubscriberComponent
+    SubscriberComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +66,7 @@ import { SubscriberComponent } from './bookin/video-chat/subscriber/subscriber.c
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ScrollToModule.forRoot(),
     StoreModule.forRoot( appReducer ),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

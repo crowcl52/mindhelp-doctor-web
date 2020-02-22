@@ -1,6 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy, ComponentFactoryResolver } from '@angular/core';
 import * as OT from '@opentok/client';
 import { OpentokService } from 'src/app/services/opentok.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { Subscription } from 'rxjs';
+import { VideoSettings } from 'src/app/redux/ui.reducer';
+import { SetVideoSettings } from 'src/app/redux/ui.actions';
 
 
 @Component({
@@ -13,8 +18,13 @@ export class VideoChatComponent implements OnInit, OnDestroy {
   session: OT.Session;
   streams: Array<OT.Stream> = [];
   changeDetectorRef: ChangeDetectorRef;
+  uiSUbscription: Subscription = new Subscription();
+  video:VideoSettings = {
+    video: true,
+    audio: true
+  }
 
-  constructor(private ref: ChangeDetectorRef, private opentokService: OpentokService) {
+  constructor(private ref: ChangeDetectorRef, private opentokService: OpentokService, private store: Store<AppState>) {
     this.changeDetectorRef = ref;
   }
 
@@ -38,17 +48,25 @@ export class VideoChatComponent implements OnInit, OnDestroy {
       console.error(err);
       alert('Unable to connect. Make sure you have updated the config.ts file with your OpenTok details.');
     });
+
+    this.uiSUbscription = this.store.select('ui').subscribe( d=>{
+      console.log(d.video)
+      this.video = d.video;
+    } )
+
   }
 
   ngOnDestroy(){
     this.opentokService.disconnect();
+    this.uiSUbscription.unsubscribe();
   }
 
   videoSettings(type){
     if(type == 'video'){
-   
+      this.video.video = !this.video.video;
     }else{
-      
+      this.video.audio = !this.video.audio;
     }
+    this.store.dispatch( new SetVideoSettings( {...this.video} ) );
   }
 }

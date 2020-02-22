@@ -78,3 +78,19 @@
     width: 100%;
     text-align: center;
   }
+
+  .star-container{
+    display: flex;
+    align-items: center;
+  }
+
+  .card-doctor{
+    min-height: 290px
+  }
+
+  .book-btn{
+    width: 60%;
+    height: 35px;
+    margin: 0 auto;
+    border-radius: 20px;
+  }
