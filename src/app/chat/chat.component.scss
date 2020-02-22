@@ -1,0 +1,80 @@
+.chat-card{
+    display: flex;
+}
+
+.text{
+    display: flex;
+    font-size: 0.8rem;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.message-container{
+    width: 85%;
+}
+
+.chat-container{
+    height: 90vh;
+}
+
+.selected{
+    background: #EBEBEB;
+}
+
+.img-container{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.chat-history{
+    height: 95%;
+    overflow: auto;
+}
+
+.chat-input{
+    width: 100%;
+    border-top: 1px solid lightgray;
+
+    form{
+        display: flex;
+        width: 100%;
+    }
+
+    input{
+        width: 80%;
+        border: none;
+    }
+
+    button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border:none;
+        background: none;
+    }
+}
+
+.chat-message{
+    display: flex;
+    flex-flow: column;
+}
+
+.doctor-message{
+    width: 80%;
+    background: #E5E5EA;
+    border-radius: 20px;
+    padding: 5px 20px;
+    color: #111;
+    align-self: flex-end;
+}
+
+.user-message{
+    width: 80%;
+    background: #27AC75;
+    border-radius: 20px;
+    padding: 5px 20px;
+    color: white;
+    margin-left: 1rem;
+}

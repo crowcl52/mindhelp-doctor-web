@@ -1,8 +1,52 @@
 <section class="container-fluid pt-3">
 
-  <div *ngIf="chatList.length > 0; else loggedOut">
-    Welcome back, friend.
-  </div>
+  <section class="container-fluid" *ngIf="chatList.length > 0; else loggedOut">
+    <div class="row chat-container">
+      <div class="col-xl-3 p-0 border-right">
+        <div [id]="'chat'+c.id" class="chat-card border-bottom p-2" [ngClass]="{'selected': curentChatId == c.id}"
+          (click)="getChatHistory(c)" *ngFor="let c of chatList">
+
+          <div class="img-container mr-2">
+            <img width="100%" [src]="c.doctor.profile_image_url" [alt]="c.doctor.first_name">
+          </div>
+
+          <div class="message-container">
+            <div class="text">
+              <p class="text-dark m-0"> <b> {{c.doctor.first_name}} {{c.doctor.last_name}} </b> </p>
+              <span> {{c.created_atz | date:'h:mm:ss'}} </span>
+            </div>
+
+            <div class="message">
+              <p class="text-dark m-0 text-truncate"> {{c.message}} </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col p-0 chat">
+
+        <div class="chat-history">
+          <div class="chat-message" *ngFor="let ch of chatHistory">
+            <p class="message-chat"
+              [ngClass]="{'doctor-message': ch.send_from == 'doctor', 'user-message': ch.send_from != 'doctor'}">
+              {{ch.message}} </p>
+          </div>
+        </div>
+        <div class="chat-input pt-2">
+          <form (ngSubmit)="onSubmit()">
+            <button class="ml-3">
+              <mat-icon class="txt-main">add</mat-icon>
+            </button>
+            <input type="text" [(ngModel)]="chatInput" name="chatInput" placeholder="Escribe un mensaje aquí">
+            <button type="submit" class="ml-3">
+              <mat-icon class="txt-main">send</mat-icon>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <ng-template #loggedOut>
     <h3 class="text-center text-secondary"> Por el momento no hay chats disponibles </h3>

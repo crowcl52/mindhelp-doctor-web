@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { SetCategorieAction } from '../redux/categories.actions';
 import { SetCategorieDoctorsAction } from '../redux/categories-doctors.actions';
 import { ChangeTitleNav } from '../redux/ui.actions';
+import { GetChatHistory } from '../redux/chat-history.actions';
 
 
 @Injectable({
@@ -25,13 +26,13 @@ export class AuthService {
 
   private user = null;
 
-  constructor( private http: HttpClient, private store: Store<AppState>, private route: Router ) { }
+  constructor(private http: HttpClient, private store: Store<AppState>, private route: Router) { }
 
   login(user) {
     let url = `${this.url}app_login`;
-    this.http.post(url, user).subscribe((data:any) => {
+    this.http.post(url, user).subscribe((data: any) => {
       let user = JSON.parse(this.decrypt(data.user));
-      this.store.dispatch(new SetUserAction({... user}))
+      this.store.dispatch(new SetUserAction({ ...user }))
       this.user = user;
       this.privateKey = user.enckey;
       this.token = user.token;
@@ -47,11 +48,11 @@ export class AuthService {
     })
   }
 
-  register(user){
+  register(user) {
     let url = `${this.url}register`;
-    this.http.post(url, user).subscribe((data:any) => {
+    this.http.post(url, user).subscribe((data: any) => {
       let user = JSON.parse(this.decrypt(data.user));
-      this.store.dispatch(new SetUserAction({... user}))
+      this.store.dispatch(new SetUserAction({ ...user }))
       this.user = user;
       this.route.navigate(['panel']);
     }, err => {
@@ -84,16 +85,16 @@ export class AuthService {
    * @memberof AuthService
    */
   encrypt(data: any, type: string = "public") {
-    let _key = (type == "public") ? CryptoJS.enc.Utf8.parse(this.publicKey) : CryptoJS.enc.Utf8.parse(this.privateKey) ;
+    let _key = (type == "public") ? CryptoJS.enc.Utf8.parse(this.publicKey) : CryptoJS.enc.Utf8.parse(this.privateKey);
     let _iv = CryptoJS.enc.Utf8.parse(this.secureIV);
 
     let encrypted = CryptoJS.AES.encrypt(
       JSON.stringify(data), _key, {
-        keySize: 128,
-        iv: _iv,
-        mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.Pkcs7
-      });
+      keySize: 128,
+      iv: _iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
     return encrypted.toString();
   }
 
@@ -106,22 +107,22 @@ export class AuthService {
    * @memberof AuthService
    */
   decrypt(data: any, type: string = "public") {
-    let _key = (type == "public") ? CryptoJS.enc.Utf8.parse(this.publicKey) : CryptoJS.enc.Utf8.parse(this.privateKey) ;
+    let _key = (type == "public") ? CryptoJS.enc.Utf8.parse(this.publicKey) : CryptoJS.enc.Utf8.parse(this.privateKey);
     let _iv = CryptoJS.enc.Utf8.parse(this.secureIV);
 
     let decrypted = CryptoJS.AES.decrypt(
-     data, _key, {
-        keySize: 128,
-        iv: _iv,
-        mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.Pkcs7
-      }).toString(CryptoJS.enc.Utf8)
+      data, _key, {
+      keySize: 128,
+      iv: _iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    }).toString(CryptoJS.enc.Utf8)
     return decrypted;
   }
 
-  getCategories(){
+  getCategories() {
     let url = `${this.url}categories`;
-    this.http.post(url,{}).subscribe((data:any) => {
+    this.http.post(url, {}).subscribe((data: any) => {
       let c = JSON.parse(this.decrypt(data.data));
       this.store.dispatch(new SetCategorieAction([...c.categlories]))
     }, err => {
@@ -130,100 +131,123 @@ export class AuthService {
     })
   }
 
-  getDoctors(data){
+  getDoctors(data) {
     let url = `${this.url}doctors`;
-    this.http.post(url,data).subscribe((data:any) => {
+    this.http.post(url, data).subscribe((data: any) => {
       let doctors = JSON.parse(this.decrypt(data.data, "public"));
       this.store.dispatch(new SetCategorieDoctorsAction([...doctors.doctors]))
       let textTitle = `Hay ${doctors.doctors.length} doctores disponible en esta categoria`;
-      this.store.dispatch( new ChangeTitleNav( textTitle ) );
+      this.store.dispatch(new ChangeTitleNav(textTitle));
     }, err => {
       console.log(err)
       // this.presentAlert(err.error.msg);
     })
   }
 
-  getDoctorDetail(data){
+  getDoctorDetail(data) {
     let url = `${this.url}doctor_details`;
-    return this.http.post(url,data);
+    return this.http.post(url, data);
   }
 
-  getDoctorAppointmentsList(data){
+  getDoctorAppointmentsList(data) {
     let url = `${this.url}doc_appointments_list`;
-    return this.http.post(url,data);
+    return this.http.post(url, data);
   }
 
-  getDoctorTimeList(data){
+  getDoctorTimeList(data) {
     let url = `${this.url}doc_time_slots_list`;
-    return this.http.post(url,data);
+    return this.http.post(url, data);
   }
 
-  getDoctorFee(data){
+  getDoctorFee(data) {
     let url = `${this.url}doc_fee`;
-    return this.http.post(url,data);
+    return this.http.post(url, data);
   }
 
-  applyCupon(data){
+  applyCupon(data) {
     let url = `${this.url}apply_coupon`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     });
 
-    return this.http.post(url,data,{ headers });
+    return this.http.post(url, data, { headers });
   }
 
-  saveBooking(data){
+  saveBooking(data) {
     let url = `${this.url}save_appointment`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     });
 
-    return this.http.post(url,data,{ headers });
+    return this.http.post(url, data, { headers });
   }
 
-  getBookingList(data){
+  getBookingList(data) {
     let url = `${this.url}all_appointment`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     });
 
-    return this.http.post(url,data,{ headers });
+    return this.http.post(url, data, { headers });
   }
 
-  getBookinDetail(data){
+  getBookinDetail(data) {
     let url = `${this.url}appointment_detail`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     });
 
-    return this.http.post(url,data,{ headers });
+    return this.http.post(url, data, { headers });
   }
 
-  getOTToken(id){
+  getOTToken(id) {
     let url = `${this.url}create_token/${id}`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     });
 
-    return this.http.get(url,{ headers });
+    return this.http.get(url, { headers });
   }
 
-  editProfile(data){
+  editProfile(data) {
     let url = `${this.url}edit_profile`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     });
 
-    return this.http.post(url,data,{ headers });
+    return this.http.post(url, data, { headers });
   }
 
-  getChats(data){
+  getChats(data) {
     let url = `${this.url}chats`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     });
 
-    return this.http.post(url,data,{ headers });
+    return this.http.post(url, data, { headers });
+  }
+
+  getChatHistory(data) {
+    let url = `${this.url}chat_history`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+
+    this.http.post(url, data, { headers }).subscribe((d: any) => {
+      let data = JSON.parse(this.decrypt(d.data, "private"));
+      this.store.dispatch(new GetChatHistory([...data.chat_history]))
+    }, err => {
+      console.log(err)
+    });
+  }
+
+  saveChat(data) {
+    let url = `${this.url}chat_history`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+
+    return this.http.post(url, data, { headers })
   }
 
 }
