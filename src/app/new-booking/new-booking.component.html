@@ -82,7 +82,7 @@
                     <p class="m-0 text-secondari col">Chat ilimitado por una semana </p>
                 </div>
                 <!-- Aplicar cupon -->
-                <ng-container *ngIf="(doctorFee != '0' )" >
+                <ng-container *ngIf="(doctorFee != 0 )" >
                     <h5 class="text-secondary mt-3"> Aplicar cupon </h5>
                     <div class="info-block shadow-sm row m-0 p-2">
                         <mat-form-field class="col-10">
@@ -94,7 +94,7 @@
                     <p class="text-danger text-right" *ngIf="!cuponValid" > {{cuponText}} </p>
                 </ng-container>
                 <!-- Precio y descuentos -->
-                <div class="price" *ngIf="(doctorFee != '0' )" >
+                <div class="price" *ngIf="(doctorFee != 0 )" >
                     <div class="price row justify-cont m-0 mt-3">
                         <p class="text-dark font-weight-bold col-10"> Total de la consulta </p>
                         <p class="font-weight-bold col-2"> {{doctorFee | currency }} </p>

@@ -80,9 +80,11 @@ export class ChatComponent implements OnInit, OnDestroy {
       time_zone: 'America/Regina'
     }
 
-    let encData = {data:this.service.encrypt(data,"private")};
+    console.log(data)
 
-    this.service.saveChat(encData).subscribe((d: any) => {
+    let encData = {data:this.service.encrypt(data,"")};
+
+    this.service.saveChat(data).subscribe((d: any) => {
       let data = JSON.parse(this.service.decrypt(d.data, "private"));
       console.log(data)
     }, err => {

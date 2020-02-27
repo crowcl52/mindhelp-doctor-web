@@ -162,6 +162,15 @@ export class NewBookingComponent implements OnInit {
 
   saveBooking() {
     let time = (this.doctorTime.split(" ")[0]) + ":00";
+
+    if(this.doctorTime.split(" ")[1] == "pm"){
+      if( (Number(time.split(":")[0]) + 12) != 24 ){
+        time = ( (Number(time.split(":")[0]) + 12)+":" +time.split(":")[1] + ":00" )
+      }else{
+        time =  "00:" + time.split(":")[1] + ":00";
+      }
+    }
+
     let date = this.doctorDate + " " + time;
 
     let data = {

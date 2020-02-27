@@ -242,7 +242,7 @@ export class AuthService {
   }
 
   saveChat(data) {
-    let url = `${this.url}chat_history`;
+    let url = `${this.url}save_chat`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     });

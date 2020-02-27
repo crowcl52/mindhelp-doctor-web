@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <p class="text-dark text-truncate"> {{d.doctor.description}}
+                    <p class="text-dark text-truncate" [matTooltip]="d.doctor.description"> {{d.doctor.description}}
                     </p> <a class="txt-main cursor" [href]="d.doctor.resume" target="_blank"> Ver Curriculum </a>
                 </div>
                 <button mat-button class="bg-main text-white mb-3 book-btn"
