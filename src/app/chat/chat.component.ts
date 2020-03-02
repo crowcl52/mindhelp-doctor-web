@@ -5,6 +5,8 @@ import { AppState } from '../app.reducer';
 import { Subscription } from 'rxjs';
 import { CleartChatHistory } from '../redux/chat-history.actions';
 import { ChangeTitleNav } from '../redux/ui.actions';
+import { Socket } from 'ngx-socket-io';
+
 
 @Component({
   selector: 'app-chat',
@@ -20,14 +22,16 @@ export class ChatComponent implements OnInit, OnDestroy {
   currentChat: any = null;
   chatSubscribe: Subscription = new Subscription();
 
-  constructor( private service: AuthService, private store: Store<AppState> ) { }
+  constructor( private service: AuthService, private store: Store<AppState>, private socket: Socket ) { }
 
   ngOnInit() {
     this.getChats();
     this.chatSubscribe = this.store.select('chatHistory').subscribe( c =>{
       this.chatHistory = c.data;
     } )
-    this.store.dispatch( new ChangeTitleNav("Chats"))
+    this.store.dispatch( new ChangeTitleNav("Chats"));
+    
+    this.getMessage();
   }
 
   ngOnDestroy(){
@@ -70,28 +74,17 @@ export class ChatComponent implements OnInit, OnDestroy {
   onSubmit(){
     let c = this.currentChat;
 
-    let data = {
-      app_id: c.app_id,
-      user_id: c.user_id,
-      doc_id: c.doc_id,
-      mtype: 'TEXT',
-      message: this.chatInput,
-      from:'user',
-      time_zone: 'America/Regina'
-    }
-
-    console.log(data)
-
-    let encData = {data:this.service.encrypt(data,"")};
-
-    this.service.saveChat(data).subscribe((d: any) => {
-      let data = JSON.parse(this.service.decrypt(d.data, "private"));
-      console.log(data)
-    }, err => {
-      console.log(err)
-    });
+    this.socket.emit("user_chats", this.chatInput);
 
     this.chatInput = "";
   }
+
+  getMessage() {
+
+    console.log(this.socket.fromEvent("user_chats"))
+
+    return this.socket
+        .fromEvent("user_chats")
+}
 
 }

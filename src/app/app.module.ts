@@ -10,6 +10,8 @@ import { StoreModule } from '@ngrx/store';
 import { appReducer } from './app.reducer';
 
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
 
 // Components
 import { AppRoutingModule } from './app-routing.module';
@@ -34,6 +36,8 @@ import { VideoChatComponent } from './bookin/video-chat/video-chat.component';
 import { PublisherComponent } from './bookin/video-chat/publisher/publisher.component';
 import { SubscriberComponent } from './bookin/video-chat/subscriber/subscriber.component';
 import { LandingComponent } from './landing/landing.component';
+
+const config: SocketIoConfig = { url: 'https://mindhelp.mx', options: {} };
 
 
 @NgModule({
@@ -66,6 +70,7 @@ import { LandingComponent } from './landing/landing.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SocketIoModule.forRoot(config),
     ScrollToModule.forRoot(),
     StoreModule.forRoot( appReducer ),
     StoreDevtoolsModule.instrument({
