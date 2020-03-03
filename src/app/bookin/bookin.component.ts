@@ -91,8 +91,8 @@ export class BookinComponent implements OnInit {
     this.service.getOTToken(3).subscribe((d: any) => {
       let data = JSON.parse(this.service.decrypt(d.data));
       console.log(data)
-      // config.SESSION_ID = data.session_id;
-      // config.TOKEN = data.user_token;
+      config.SESSION_ID = data.session_id;
+      config.TOKEN = data.user_token;
       console.log(config)
       this.router.navigate(['/panel/video']);
     }, err => {
