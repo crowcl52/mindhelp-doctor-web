@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerFG = this._formBuilder.group({
-      role_id: ['3', Validators.required],
+      role_id: ['2', Validators.required],
       first_name: ['Eduardo', Validators.required],
       last_name: ['Sanchez', Validators.required],
       email: ['crowcl52@hotmail.com', Validators.required],

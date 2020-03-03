@@ -14,8 +14,8 @@ export class LoginComponent implements OnInit {
 
   hide = true;
 
-  email = "aperezsandid+1@gmail.com";
-  password = "12345678";
+  email = "Aperezsandid@gmail.com";
+  password = "123456";
 
   constructor( private authService:AuthService, private store: Store<AppState>, private router: Router ) { }
 
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   login() {
 
-    let user = {"email": (this.email),"password": (this.password),"time_zone": 'America/Regina',"role_id": "3"};
+    let user = {"email": (this.email),"password": (this.password),"time_zone": 'America/Regina',"role_id": "2"};
     
     let encryptUser = {data: this.authService.encrypt(user,"public")};
 

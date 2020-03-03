@@ -74,8 +74,7 @@
                             </div>
                             <div class="container-fluid mt-3">
                                 <div class="row justify-content-between">
-                                    <button (click)="goSession()" type="button"
-                                        class="btn bg-main text-white col-5">
+                                    <button (click)="goSession()" type="button" class="btn bg-main text-white col-5">
                                         <mat-icon>videocam_outline</mat-icon> Video
                                     </button>
                                     <button [disabled]="cheackDates(b.start_date)" (click)="goSession()" type="button"
@@ -93,90 +92,10 @@
         <!-- Next -->
         <mat-tab label="Próximos">
             <div class="container-fluid">
-                <div *ngFor="let b of bookingsUpcoming" class="row content-info mb-4">
-                    <div class="col-xl-7 col-12 row">
-                        <div class="row col-12 mt-3 mx-0">
-                            <div class="col-auto">
-                                <img [src]="b.doctor_details.profile_image_url" class="rounded-circle avatar"
-                                    alt="avatar">
-                            </div>
-                            <div class="col-8">
-                                <h3> <b> {{b.doctor_details.first_name}} {{b.doctor_details.last_name}} </b> </h3>
-                                <p class="m-0 txt-main"> {{b.category_name}} </p>
-                            </div>
-                            <div class="col-auto">
-                                <span
-                                    [ngClass]="{'badge-danger': b.status == 'expired', 'badge-success': b.status != 'expired' }"
-                                    class="badge">{{b.status}}</span>
-                            </div>
-                        </div>
-                        <div class="col-12 row align-items-center">
-                            <div class="col-12 p-4">
-                                <mat-divider></mat-divider>
-                                <div class="row">
-                                    <!-- Dates select -->
-                                    <div class="col-xl-6 col-12">
-                                        <h5 class="text-secondary mt-3"> Fecha y hora de la consulta </h5>
-                                        <div class="info-block shadow-sm row m-0">
-                                            <div class="col-6 center-flex">
-                                                <p class="m-0 mr-2 txt-main">
-                                                    <mat-icon>calendar_today_outline</mat-icon>
-                                                </p>
-                                                <span class="text-secondary"> {{b.month}} </span>
-                                            </div>
-                                            <div class="col-6 center-flex">
-                                                <p class="m-0 mr-2 txt-main">
-                                                    <mat-icon>access_time</mat-icon>
-                                                </p>
-                                                <span class="text-secondary"> {{b.day}} </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- La consulta incluye -->
-                                    <div class="col-xl-6 col-12">
-                                        <h5 class="text-secondary mt-3"> Esta consulta incluye </h5>
-                                        <div class="info-block shadow-sm row m-0 p-2">
-                                            <p class="m-0 col-1">
-                                                <mat-icon>people_alt</mat-icon>
-                                            </p>
-                                            <p class="m-0 text-secondari col-11">Una sesion de una hora </p>
-                                            <p class="m-0 col-1">
-                                                <mat-icon>chat_bubble_outline</mat-icon>
-                                            </p>
-                                            <p class="m-0 text-secondari col">Chat ilimitado por una semana </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Cuadro de accion -->
-                    <div class="col-xl-5 col-12 row align-items-center">
-                        <div class="col-12 p-4 border shadow container-fluid">
-                            <div class="row justify-content-between">
-                                <h2> Precio Total </h2>
-                                <h2 class="txt-main"> {{b.price}} </h2>
-                            </div>
-                            <mat-divider></mat-divider>
-                            <!-- La consulta incluye -->
-                            <h5 class="text-secondary mt-3"> Opciones de cancelación </h5>
-                            <div class="info-block shadow-sm row m-0 p-2">
-                                <p class="m-0 text-secondari col-11">Cancelacion gratuita 24h antes </p>
-                                <p class="m-0 text-secondari col">Cancelar el {{b.month}} no hay devoluciones </p>
-                            </div>
-                        </div>
-                    </div>
-                    <mat-divider class="col-12"></mat-divider>
-                </div>
-            </div>
-        </mat-tab>
-        <!-- Past -->
-        <mat-tab label="Pasados">
-            <div class="container-fluid">
                 <div class="row">
-                    <div *ngFor="let b of bookingsPast" class="row col-xl-6 col-12 content-info mb-4">
-                        <div class="col-12 row">
-                            <div class="row col-12 mt-3 mx-0">
+                    <div *ngFor="let b of bookingsUpcoming" class="row col-xl-4 col-12 content-info my-4">
+                        <div class="col-12 row mx-auto border">
+                            <div class="row col-12 mt-3">
                                 <div class="col-auto">
                                     <img [src]="b.doctor_details.profile_image_url" class="rounded-circle avatar"
                                         alt="avatar">
@@ -186,7 +105,9 @@
                                     <p class="m-0 txt-main"> {{b.category_name}} </p>
                                 </div>
                                 <div class="col-auto">
-                                    <span class="badge badge-success">{{b.status}}</span>
+                                    <span
+                                        [ngClass]="{'badge-danger': b.status == 'expired', 'badge-success': b.status != 'expired' }"
+                                        class="badge">{{b.status}}</span>
                                 </div>
                             </div>
                             <div class="col-12 row align-items-center">
@@ -211,14 +132,60 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button color="primary" mat-raised-button class="col-12 mt-2 text-white"
-                                            [routerLink]="['/panel/booking-now',b.doc_id,b.cat_id]"> Volver a Agendar
-                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <mat-divider class="col-12"></mat-divider>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <!-- Past -->
+        <mat-tab label="Pasados">
+            <div class="container-fluid">
+                <div class="row">
+                    <div *ngFor="let b of bookingsPast" class="row col-xl-4 col-12 content-info my-4">
+                        <div class="col-12 row mx-auto border">
+                            <div class="row col-12 mt-3">
+                                <div class="col-auto">
+                                    <img [src]="b.doctor_details.profile_image_url" class="rounded-circle avatar"
+                                        alt="avatar">
+                                </div>
+                                <div class="col-8">
+                                    <h3> <b> {{b.doctor_details.first_name}} {{b.doctor_details.last_name}} </b> </h3>
+                                    <p class="m-0 txt-main"> {{b.category_name}} </p>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="badge"
+                                        [ngClass]="{'badge-danger': b.status == 'expired', 'badge-success': b.status != 'expired' }">{{b.status}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12 row align-items-center">
+                                <div class="col-12 p-4">
+                                    <mat-divider></mat-divider>
+                                    <div class="row">
+                                        <!-- Dates select -->
+                                        <div class="col-12">
+                                            <h5 class="text-secondary mt-3"> Fecha y hora de la consulta </h5>
+                                            <div class="info-block shadow-sm row m-0">
+                                                <div class="col-6 center-flex">
+                                                    <p class="m-0 mr-2 txt-main">
+                                                        <mat-icon>calendar_today_outline</mat-icon>
+                                                    </p>
+                                                    <span class="text-secondary"> {{b.month}} </span>
+                                                </div>
+                                                <div class="col-6 center-flex">
+                                                    <p class="m-0 mr-2 txt-main">
+                                                        <mat-icon>access_time</mat-icon>
+                                                    </p>
+                                                    <span class="text-secondary"> {{b.day}} </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -226,4 +193,4 @@
     </mat-tab-group>
 </section>
 
-<button mat-button (click)="goSession()" > Force Video </button>
+<button mat-button (click)="goSession()"> Force Video </button>

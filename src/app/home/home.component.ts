@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
-import { Categorie } from '../models/categorie.model';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ChangeTitleNav } from '../redux/ui.actions';
-import { UnsetCategorieDoctorsAction } from '../redux/categories-doctors.actions';
+
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-home',
@@ -15,59 +14,37 @@ import { UnsetCategorieDoctorsAction } from '../redux/categories-doctors.actions
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  catSuscription: Subscription = new Subscription();
-  docSuscription: Subscription = new Subscription();
+  bookings = [];
 
-  doctors = [];
-  categories: Categorie[] = [];
-  cat_Id;
-  firstModal = true;
-  constructor( private store: Store<AppState>, private authService: AuthService, private router: Router ) {
-    this.catSuscription = store.select('categories').subscribe(c => {
-      this.categories = c.data;
-    });
-    this.docSuscription = store.select('cdoctors').subscribe(cd =>{
-      this.doctors = cd.data;
-    })
-   }
+  constructor( private store: Store<AppState>, private authService: AuthService, private router: Router ) {}
 
   ngOnInit() {
+    this.getBookings("today");
+  }
+
+  getBookings(type) {
+    let data = {
+      type,
+      time_zone: 'America/Regina'
+    }
+    this.authService.getBookingList(data).subscribe((d: any) => {
+      console.log(d.appointments)
+      this.bookings = d.appointments;
+    }, err => {
+      console.log(err)
+      Swal.fire({
+        icon: 'error',
+        title: 'Ha ocurrido un error',
+        text: err.error.msg,
+      });
+    });
+
   }
 
   ngAfterViewInit(){
-    this.goCategorie(5,'cat5')
-  }
-
-  goCategorie(id, name){
-    this.cat_Id = id;
-    this.toogleCard(name);
-    let data = {
-      cat_id: id,
-      time_zone: 'America/Regina'
-    }
-
-    let encryptData = {data : this.authService.encrypt(data, "public")};
-    this.authService.getDoctors(encryptData);
-  }
-
-  toogleCard(id){
-    var sections = document.querySelectorAll('.img-container');
-        for (let i = 0; i < sections.length; i++){
-          sections[i].classList.remove('active-categori');
-        }
-    document.querySelector(`#${id}`).classList.add('active-categori');
-  }
-
-  bookingNow(id){
-    this.router.navigate(['panel/booking-now',id,this.cat_Id]);
   }
 
   ngOnDestroy(){
-    this.doctors = [];
-    this.catSuscription.unsubscribe();
-    this.docSuscription.unsubscribe();
-    this.store.dispatch( new ChangeTitleNav( "" ) );
-    this.store.dispatch( new UnsetCategorieDoctorsAction())
 
   }
 
