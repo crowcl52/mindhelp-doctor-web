@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'minhelp-user-web'`, () => {
+  it(`should have as title 'minhelp-doctor-web'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('minhelp-user-web');
+    expect(app.title).toEqual('minhelp-doctor-web');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('minhelp-user-web app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('minhelp-doctor-web app is running!');
   });
 });

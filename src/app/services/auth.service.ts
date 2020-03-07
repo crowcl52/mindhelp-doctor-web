@@ -7,8 +7,6 @@ import { AppState } from '../app.reducer';
 import { SetUserAction } from '../redux/user.actions';
 import { Router } from '@angular/router';
 import { SetCategorieAction } from '../redux/categories.actions';
-import { SetCategorieDoctorsAction } from '../redux/categories-doctors.actions';
-import { ChangeTitleNav } from '../redux/ui.actions';
 import { GetChatHistory } from '../redux/chat-history.actions';
 
 
@@ -131,57 +129,6 @@ export class AuthService {
     })
   }
 
-  getDoctors(data) {
-    let url = `${this.url}doctors`;
-    this.http.post(url, data).subscribe((data: any) => {
-      let doctors = JSON.parse(this.decrypt(data.data, "public"));
-      this.store.dispatch(new SetCategorieDoctorsAction([...doctors.doctors]))
-      let textTitle = `Hay ${doctors.doctors.length} doctores disponible en esta categoria`;
-      this.store.dispatch(new ChangeTitleNav(textTitle));
-    }, err => {
-      console.log(err)
-      // this.presentAlert(err.error.msg);
-    })
-  }
-
-  getDoctorDetail(data) {
-    let url = `${this.url}doctor_details`;
-    return this.http.post(url, data);
-  }
-
-  getDoctorAppointmentsList(data) {
-    let url = `${this.url}doc_appointments_list`;
-    return this.http.post(url, data);
-  }
-
-  getDoctorTimeList(data) {
-    let url = `${this.url}doc_time_slots_list`;
-    return this.http.post(url, data);
-  }
-
-  getDoctorFee(data) {
-    let url = `${this.url}doc_fee`;
-    return this.http.post(url, data);
-  }
-
-  applyCupon(data) {
-    let url = `${this.url}apply_coupon`;
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.token
-    });
-
-    return this.http.post(url, data, { headers });
-  }
-
-  saveBooking(data) {
-    let url = `${this.url}save_appointment`;
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.token
-    });
-
-    return this.http.post(url, data, { headers });
-  }
-
   getBookingList(data) {
     let url = `${this.url}all_appointment`;
     const headers = new HttpHeaders({
@@ -193,6 +140,15 @@ export class AuthService {
 
   getBookinDetail(data) {
     let url = `${this.url}appointment_detail`;
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+
+    return this.http.post(url, data, { headers });
+  }
+
+  acceptBooking(data){
+    let url = `${this.url}doctor/status_change_app`;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.token
     });

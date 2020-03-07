@@ -27,7 +27,6 @@ import { BookinComponent } from './bookin/bookin.component';
 import { ChatComponent } from './chat/chat.component';
 import { SettingsComponent } from './settings/settings.component';
 import { PanelComponent } from './panel/panel.component';
-import { NewBookingComponent } from './new-booking/new-booking.component';
 import { EditProfileComponent } from './settings/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
 import { ContactComponent } from './settings/contact/contact.component';
@@ -36,6 +35,7 @@ import { VideoChatComponent } from './bookin/video-chat/video-chat.component';
 import { PublisherComponent } from './bookin/video-chat/publisher/publisher.component';
 import { SubscriberComponent } from './bookin/video-chat/subscriber/subscriber.component';
 import { LandingComponent } from './landing/landing.component';
+import { DeclineModalComponent } from './ui/decline-modal/decline-modal.component';
 
 const config: SocketIoConfig = { url: 'https://mindhelp.mx', options: {} };
 
@@ -52,7 +52,6 @@ const config: SocketIoConfig = { url: 'https://mindhelp.mx', options: {} };
     ChatComponent,
     SettingsComponent,
     PanelComponent,
-    NewBookingComponent,
     EditProfileComponent,
     ChangePasswordComponent,
     ContactComponent,
@@ -60,7 +59,8 @@ const config: SocketIoConfig = { url: 'https://mindhelp.mx', options: {} };
     VideoChatComponent,
     PublisherComponent,
     SubscriberComponent,
-    LandingComponent
+    LandingComponent,
+    DeclineModalComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +77,9 @@ const config: SocketIoConfig = { url: 'https://mindhelp.mx', options: {} };
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
+  ],
+  entryComponents: [
+    DeclineModalComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

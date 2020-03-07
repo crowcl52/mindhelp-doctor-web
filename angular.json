@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "minhelp-user-web": {
+    "minhelp-doctor-web": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/minhelp-user-web",
+            "outputPath": "dist/minhelp-doctor-web",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "minhelp-user-web:build"
+            "browserTarget": "minhelp-doctor-web:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "minhelp-user-web:build:production"
+              "browserTarget": "minhelp-doctor-web:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "minhelp-user-web:build"
+            "browserTarget": "minhelp-doctor-web:build"
           }
         },
         "test": {
@@ -117,16 +117,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "minhelp-user-web:serve"
+            "devServerTarget": "minhelp-doctor-web:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "minhelp-user-web:serve:production"
+              "devServerTarget": "minhelp-doctor-web:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "minhelp-user-web"
+  "defaultProject": "minhelp-doctor-web"
 }

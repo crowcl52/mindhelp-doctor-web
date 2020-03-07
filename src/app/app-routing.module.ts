@@ -8,7 +8,6 @@ import { PanelComponent } from './panel/panel.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AuthGuard } from './auth/auth.guard';
-import { NewBookingComponent } from './new-booking/new-booking.component';
 import { EditProfileComponent } from './settings/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
 import { ContactComponent } from './settings/contact/contact.component';
@@ -25,7 +24,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'booking-now/:id/:cat_id', component: NewBookingComponent },
       { path: 'booking', component: BookinComponent },
       { path: 'video', component: VideoChatComponent },
       { path: 'chat', component: ChatComponent },

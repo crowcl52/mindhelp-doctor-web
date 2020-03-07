@@ -5,8 +5,6 @@ import { AppState } from '../app.reducer';
 import { Subscription } from 'rxjs';
 import { CleartChatHistory } from '../redux/chat-history.actions';
 import { ChangeTitleNav } from '../redux/ui.actions';
-import { Socket } from 'ngx-socket-io';
-
 
 @Component({
   selector: 'app-chat',
@@ -22,7 +20,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   currentChat: any = null;
   chatSubscribe: Subscription = new Subscription();
 
-  constructor( private service: AuthService, private store: Store<AppState>, private socket: Socket ) { }
+  constructor( private service: AuthService, private store: Store<AppState>) { 
+    }
 
   ngOnInit() {
     this.getChats();
@@ -32,7 +31,36 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.store.dispatch( new ChangeTitleNav("Chats"));
     
     this.getMessage();
+    // one signal integration
+
+    var OneSignal = window['OneSignal'] || [];
+    console.log("Init OneSignal");
+    OneSignal.push(["init", {
+      appId: "cc363601-fea2-44f0-ab26-a609c010eb1e",
+      autoRegister: false,
+      allowLocalhostAsSecureOrigin: true,
+      notifyButton: {
+        enable: false
+      }
+    }]);
+    console.log('OneSignal Initialized');
+    OneSignal.push(function () {
+      console.log('Register For Push');
+      OneSignal.push(["registerForPushNotifications"])
+    });
+    OneSignal.push(function () {
+      // Occurs when the user's subscription changes to a new value.
+      OneSignal.on('subscriptionChange', function (isSubscribed) {
+        console.log("The user's subscription state is now:", isSubscribed);
+        OneSignal.getUserId().then(function (userId) {
+          console.log("User ID is", userId);
+        });
+      });
+    });
+
   }
+
+
 
   ngOnDestroy(){
     this.chatSubscribe.unsubscribe()
@@ -74,17 +102,12 @@ export class ChatComponent implements OnInit, OnDestroy {
   onSubmit(){
     let c = this.currentChat;
 
-    this.socket.emit("user_chats", this.chatInput);
-
     this.chatInput = "";
   }
 
   getMessage() {
 
-    console.log(this.socket.fromEvent("user_chats"))
-
-    return this.socket
-        .fromEvent("user_chats")
 }
+
 
 }

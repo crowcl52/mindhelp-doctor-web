@@ -2,7 +2,10 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { AuthService } from '../services/auth.service';
+import { ChatService } from '../services/chat.service';
 import { Router } from '@angular/router';
+import config from '../services/config';
+
 
 import Swal from 'sweetalert2';
 
@@ -16,7 +19,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   bookings = [];
 
-  constructor( private store: Store<AppState>, private authService: AuthService, private router: Router ) {}
+  constructor(
+    private store: Store<AppState>,
+    private authService: AuthService,
+    private router: Router,
+    private chatService: ChatService) { }
 
   ngOnInit() {
     this.getBookings("today");
@@ -41,11 +48,54 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  ngAfterViewInit(){
+  goSession(booking) {
+    this.chatService.getOTBooking(booking.id).subscribe((d: any) => {
+      if (d.data.items[0].appointmentId) {
+        console.log(d.data.items[0])
+        config.SESSION_ID = d.data.items[0].session;
+        config.TOKEN =  d.data.items[0].doctor_token;
+        console.log(config)
+        this.router.navigate(['/panel/video']);
+      } else {
+        this.generateOTToken(booking);
+      }
+    })
+
   }
 
-  ngOnDestroy(){
+  ngAfterViewInit() {
+  }
 
+  ngOnDestroy() {
+  }
+
+  generateOTToken(booking) {
+
+    this.authService.getOTToken(3).subscribe((d: any) => {
+      let data = JSON.parse(this.authService.decrypt(d.data));
+      console.log(data)
+      let dataOT = {
+        appointmentId: booking.id,
+        userId: booking.user.id,
+        doctorId: booking.doctor_details.id,
+        session: data.session_id,
+        user_token: data.user_token,
+        doctor_token: data.doctor_token,
+      }
+      console.log(dataOT)
+      this.chatService.saveOTBooking(dataOT).subscribe(d => {
+
+        config.SESSION_ID = data.session_id;
+        config.TOKEN = data.doctor_token;
+        this.router.navigate(['/panel/video']);
+
+      }, err => {
+        console.log(err)
+      });
+
+    }, err => {
+      console.log(err)
+    })
   }
 
 }
